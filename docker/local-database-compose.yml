@@ -9,7 +9,7 @@ services:
         ports:
             - '5432:5432'
         volumes:
-            - zinary_poetry_local:/var/lib/postgresql/data
+            - zinary_poetry_local_db_data:/var/lib/postgresql/data
 
 volumes:
     zinary_poetry_local_db_data:
