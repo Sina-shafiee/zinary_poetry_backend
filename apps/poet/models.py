@@ -12,4 +12,4 @@ class Poet(models.Model):
         return self.full_name
 
     class Meta:
-        db_table = "poet"
+        db_table = "poets"

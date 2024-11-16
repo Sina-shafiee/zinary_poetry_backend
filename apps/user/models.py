@@ -41,4 +41,4 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
     
     class Meta:
-        db_table = "user"
+        db_table = "users"
