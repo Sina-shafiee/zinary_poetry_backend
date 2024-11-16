@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'apps.user',
     'apps.poet',
     'apps.poem',
-    'apps.collection'
+    'apps.collection',
+    'apps.verse'
 ]
 
 MIDDLEWARE = [
