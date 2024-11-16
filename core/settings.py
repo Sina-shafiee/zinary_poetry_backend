@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'apps.user',
-    'apps.poet'
+    'apps.poet',
+    'apps.poem',
+    'apps.collection'
 ]
 
 MIDDLEWARE = [
