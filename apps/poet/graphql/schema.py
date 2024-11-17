@@ -1,4 +1,7 @@
 import graphene
+
+from api.graphql.permissions import permissions_required
+
 from .types import PoetType
 from ..models import Poet
 
@@ -26,6 +29,7 @@ class CreatePoet(graphene.Mutation):
     poet = graphene.Field(PoetType)
 
     @staticmethod
+    @permissions_required(["poet.add_poet"])
     def mutate(root, info, full_name, biography, birth_year=None, death_year=None):
 
         poet = Poet.objects.create(
@@ -48,6 +52,7 @@ class UpdatePoet(graphene.Mutation):
     poet = graphene.Field(PoetType)
 
     @staticmethod
+    @permissions_required(["poet.change_poet"])
     def mutate(
         root, info, id, full_name=None, birth_year=None, death_year=None, biography=None
     ):
