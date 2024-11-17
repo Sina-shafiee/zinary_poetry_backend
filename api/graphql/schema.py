@@ -1,6 +1,6 @@
 import graphene
 
-from apps.poem.schema import PoemQuery
+from apps.poem.graphql.schema import PoemQuery
 
 
 class Query(PoemQuery, graphene.ObjectType):

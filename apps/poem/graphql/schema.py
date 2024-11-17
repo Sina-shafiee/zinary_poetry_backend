@@ -1,6 +1,6 @@
 import graphene
 from .types import PoemType
-from .models import Poem
+from ..models import Poem
 
 
 class PoemQuery(graphene.ObjectType):
