@@ -1,7 +1,9 @@
 import graphene
 
+from apps.poem.schema import PoemQuery
 
-class Query(graphene.ObjectType):
+
+class Query(PoemQuery, graphene.ObjectType):
     pass
 
 
