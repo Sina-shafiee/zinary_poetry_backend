@@ -1,7 +1,7 @@
 import graphene
 
 from apps.poem.graphql.schema import PoemQuery, PoemMutation
-from apps.poet.graphql.schema import PoetQuery
+from apps.poet.graphql.schema import PoetQuery, PoetMutation
 from apps.collection.graphql.schema import CollectionQuery
 from apps.verse.graphql.schema import VerseQuery
 
@@ -10,7 +10,7 @@ class Query(PoemQuery, PoetQuery, CollectionQuery, VerseQuery, graphene.ObjectTy
     pass
 
 
-class Mutation(PoemMutation, graphene.ObjectType):
+class Mutation(PoemMutation, PoetMutation, graphene.ObjectType):
     pass
 
 
