@@ -149,7 +149,8 @@ AUTH_USER_MODEL = "user.User"
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
-    ]
+    ],
+    "EXCEPTION_HANDLER": "api.utils.exceptions.custom_exception_handler",
 }
 
 GRAPHENE = {

@@ -9,6 +9,8 @@ from rest_framework import (
     authentication,
     status,
 )
+
+from api.utils.success_response import rest_success_response
 from .serializers import UserSerializer, LoginSerializer
 
 
@@ -26,7 +28,7 @@ class LoginView(views.APIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data["user"]
         login(request, user)
-        return response.Response(UserSerializer(user).data)
+        return rest_success_response(data=UserSerializer(user).data)
 
 
 class LogoutView(views.APIView):
@@ -48,6 +50,10 @@ class RegisterView(generics.CreateAPIView):
         user.backend = settings.AUTHENTICATION_BACKENDS[0]
         login(self.request, user)
 
+    def create(self, request, *args, **kwargs):
+        response = super().create(request, *args, **kwargs)
+        return rest_success_response(data=response.data)
+
 
 class UserView(generics.RetrieveAPIView):
     serializer_class = UserSerializer
@@ -57,5 +63,5 @@ class UserView(generics.RetrieveAPIView):
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             serializer = self.get_serializer(request.user)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return rest_success_response(data=serializer.data)
         return Response(None, status=status.HTTP_200_OK)
