@@ -35,7 +35,6 @@ def apply_query_filters(
     total_items = queryset.count()
     total_pages = math.ceil(total_items / per_page)
 
-    print("perpage:", per_page, "page:", page)
     start = (page - 1) * per_page
     end = start + per_page
     paginated_queryset = queryset[start:end]

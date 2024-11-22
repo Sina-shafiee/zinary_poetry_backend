@@ -34,7 +34,6 @@ class CreatePoem(graphene.Mutation):
     @staticmethod
     @permissions_required(["poem.add_poem"])
     def mutate(root, info, title, poet_id, collection_id, year_written=None):
-        print(title, poet_id, collection_id, year_written)
         poet = Poet.objects.get(id=poet_id)
         collection = Collection.objects.get(id=collection_id)
 
