@@ -89,18 +89,23 @@ class UserSerializer(serializers.ModelSerializer):
         },
     )
 
+    roles = serializers.SerializerMethodField()
+
+    def get_roles(self, obj):
+        return list(obj.groups.values_list("name", flat=True))
+
     class Meta:
         model = User
-        fields = ("id", "email", "first_name", "last_name", "password")
+        fields = ("id", "email", "first_name", "last_name", "password", "roles")
         extra_kwargs = {
             "password": {"required": True, "write_only": True},
             "first_name": {"required": True},
             "id": {"read_only": True},
+            "roles": {"read_only": True},
         }
 
     @staticmethod
     def validate_email(email):
-        print(email)
         if User.objects.filter(email__iexact=email).exists():
             raise serializers.ValidationError(
                 "حساب کاربری با این ایمیل از قبل وجود دارد"
