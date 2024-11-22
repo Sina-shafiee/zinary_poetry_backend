@@ -1,22 +1,41 @@
+import math
 import graphene
 
 from api.graphql.permissions import permissions_required
+from api.graphql.utils import apply_query_filters
 
-from .types import PoetType
+from .types import PaginatedPoetType, PoetType
 from ..models import Poet
 
 
 class PoetQuery(graphene.ObjectType):
-    poets = graphene.List(PoetType)
+    poets = graphene.Field(
+        PaginatedPoetType,
+        page=graphene.Int(),
+        per_page=graphene.Int(),
+        q=graphene.String(description="search query"),
+        sort=graphene.String(),
+    )
     poet = graphene.Field(PoetType, id=graphene.Int())
 
     @staticmethod
-    def resolve_poets(*args, **kwargs):
-        return Poet.objects.all()
+    def resolve_poets(root, info, page=1, per_page=10, q=None, sort=None):
+        queryset = Poet.objects.all()
 
-    @staticmethod
-    def resolve_poet(*args, **kwargs):
-        return Poet.objects.get(id=kwargs.get("id"))
+        result = apply_query_filters(
+            queryset=queryset,
+            page=page,
+            per_page=per_page,
+            search=q,
+            search_fields=["full_name", "biography"],  # Fields to search
+            sort=sort,
+        )
+
+        return PaginatedPoetType(
+            poets=result["queryset"],
+            total_pages=result["total_pages"],
+            current_page=result["current_page"],
+        )
 
 
 class CreatePoet(graphene.Mutation):
