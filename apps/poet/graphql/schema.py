@@ -93,6 +93,25 @@ class UpdatePoet(graphene.Mutation):
         return UpdatePoet(poet=poet)
 
 
+class DeletePoet(graphene.Mutation):
+    class Arguments:
+        id = graphene.ID(required=True)
+
+    success = graphene.Boolean()
+
+    @staticmethod
+    @permissions_required(["poet.delete_poet"])
+    def mutate(root, info, id):
+        try:
+            poet = Poet.objects.get(id=id)
+        except Poet.DoesNotExist:
+            raise Exception("Poet not found")
+
+        poet.delete()
+        return DeletePoet(success=True)
+
+
 class PoetMutation(graphene.ObjectType):
     create_poet = CreatePoet.Field()
     update_poet = UpdatePoet.Field()
+    delete_poet = DeletePoet.Field()
